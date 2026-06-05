@@ -24,7 +24,7 @@ class SoundService {
     if (this.isMuted) return;
     try {
       const audio = new Audio(path);
-      audio.volume = 0.7;
+      audio.volume = 1.0;
       audio.play().catch(err => {
         console.warn(`Không thể phát âm thanh từ file ${path}:`, err);
       });
