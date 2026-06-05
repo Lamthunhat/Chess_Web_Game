@@ -1603,27 +1603,29 @@ export const BoardView: React.FC<BoardViewProps> = ({
           )}
 
           {isReviewMode && reviewedMove && reviewedDetails && (
-            <div className="bg-[#1A1A20] border border-[#3c3a37] rounded-2xl p-4 shadow-md select-none animate-fade-in">
-              <div className="flex items-start gap-3">
+            <div className="bg-[#1A1A20] border border-[#3c3a37] rounded-2xl p-3 px-4 shadow-md select-none animate-fade-in h-[94px] min-h-[94px] max-h-[94px] overflow-hidden flex items-center">
+              <div className="flex items-start gap-3 w-full h-full">
                 <div className="flex-none flex items-center justify-center select-none pt-0.5">
-                  <AnalysisIcon category={reviewedMove.analysis} size={36} />
+                  <AnalysisIcon category={reviewedMove.analysis} size={32} />
                 </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="text-xs font-bold text-white font-mono uppercase bg-[#262630] px-2 py-0.5 rounded border border-[#3A3A4A]">
+                <div className="flex-1 min-w-0 flex flex-col justify-between h-full">
+                  <div className="flex items-center gap-1.5 flex-wrap shrink-0">
+                    <span className="text-[10px] font-bold text-white font-mono uppercase bg-[#262630] px-1.5 py-0.5 rounded border border-[#3A3A4A] shrink-0">
                       {reviewedMove.notation}
                     </span>
-                    <span className="text-[10px] text-slate-400 font-medium">bởi</span>
-                    <span className="text-xs font-bold text-[#E0E0E0] underline decoration-[#D4AF37]">
+                    <span className="text-[9px] text-slate-400 font-medium shrink-0">bởi</span>
+                    <span className="text-[10px] font-bold text-[#E0E0E0] underline decoration-[#D4AF37] truncate shrink-0">
                       {reviewedMove.piece.color === Color.WHITE ? 'Bên Trắng' : 'Bên Đen'}
                     </span>
-                    <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ml-auto ${reviewedDetails.colorClass} ${reviewedDetails.bgColorClass} border ${reviewedDetails.borderColorClass}`}>
+                    <span className={`text-[8.5px] font-bold px-1.5 py-0.5 rounded ml-auto truncate shrink-0 ${reviewedDetails.colorClass} ${reviewedDetails.bgColorClass} border ${reviewedDetails.borderColorClass}`}>
                       {reviewedDetails.label}
                     </span>
                   </div>
-                  <p className="text-[11px] text-[#A8B2C1] mt-1.5 leading-relaxed">
-                    {reviewedDetails.description}
-                  </p>
+                  <div className="overflow-y-auto custom-scrollbar h-[36px] min-h-[36px] max-h-[36px] mt-1 pr-0.5">
+                    <p className="text-[10.5px] text-[#A8B2C1] leading-relaxed">
+                      {reviewedDetails.description}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

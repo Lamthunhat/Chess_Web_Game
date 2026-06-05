@@ -55,9 +55,32 @@ export default function App() {
     // Reconstruct all history moves step-by-step
     const reconstructed = reconstructMovesFromNotation(record.moves);
     
-    // Create local replaying controller
+    // Create replaying controller matching the original game mode and bot difficulty
     const playerCol = record.playerColor === 'white' ? 'white' : 'black';
-    const controller = new GameController('local', 1, playerCol);
+    const isBot = record.opponent.startsWith('BOT');
+    
+    let difficulty = 1;
+    if (isBot) {
+      if (record.opponent.includes('Tập Sự')) difficulty = 1;
+      else if (record.opponent.includes('Trung Cấp')) difficulty = 2;
+      else if (record.opponent.includes('Chuyên Nghiệp')) difficulty = 3;
+      else if (record.opponent.includes('Cao Thủ')) difficulty = 4;
+      else {
+        // e.g. "BOT (2000 Elo)" or "BOT (1200 Elo)"
+        const match = record.opponent.match(/\((\d+)\s+Elo\)/);
+        if (match) {
+          difficulty = parseInt(match[1]);
+        } else {
+          difficulty = 1200; // default bot difficulty
+        }
+      }
+    }
+
+    const controller = new GameController(
+      isBot ? 'ai' : 'local',
+      difficulty,
+      playerCol
+    );
     
     // Position pieces at final point
     const displayBoard = new Board();
