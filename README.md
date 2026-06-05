@@ -8,6 +8,8 @@
 
 Chess.UTC is a premium React-based chess application inspired by the look, feel, and performance of Chess.com. It is designed using a clean MVC (Model-View-Controller) architecture, featuring dynamic scaling, advanced game history tracking, and custom local asset support.
 
+⚡ **Live Demo:** [https://chess-web-game-five.vercel.app/](https://chess-web-game-five.vercel.app/)
+
 ### 📁 Project Structure
 
 ```
@@ -67,6 +69,8 @@ Chess.UTC is a premium React-based chess application inspired by the look, feel,
 ## Tiếng Việt
 
 Chess.UTC là ứng dụng cờ vua cao cấp viết bằng React, lấy cảm hứng thiết kế từ Chess.com. Dự án được triển khai theo mô hình MVC (Model-View-Controller) chặt chẽ, hỗ trợ scale màn hình linh hoạt, ghi nhận lịch sử đấu nâng cao và tải hình ảnh quân cờ tùy biến.
+
+⚡ **Trải nghiệm trực tuyến (Live Demo):** [https://chess-web-game-five.vercel.app/](https://chess-web-game-five.vercel.app/)
 
 ### 📁 Cấu Trúc Dự Án
 
