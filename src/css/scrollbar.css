@@ -1,0 +1,23 @@
+/*
+ * Scrollbar Customization File - Chess.UTC
+ * Provides customized dark scrollbars for the move list history box,
+ * game lobby lists, and select review panel dropdowns.
+ */
+
+/* Webkit browser scrollbar customization */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #2a2a2e;
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #81b64c; /* Highlight thumb on hover with Chess.com Green */
+}

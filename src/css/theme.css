@@ -1,0 +1,20 @@
+/*
+ * Theme Configuration File - Chess.UTC
+ * Contains Tailwind theme variable extensions,
+ * and base tag modifications for the overall look and feel of the app.
+ *
+ * Customize colors or fonts here to modify the general theme.
+ */
+
+@theme {
+  /* Font Families - Chess Sans is primary, falling back to Inter */
+  --font-sans: "Chess Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, Cambria, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Base Body settings - Matches the dark warm Chess.com scheme */
+body {
+  background-color: #302e2c;
+  color: #E0E0E0;
+}

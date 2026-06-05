@@ -1,0 +1,31 @@
+/*
+ * Animations Helper File - Chess.UTC
+ * Contains keyframes and utility classes for UI micro-interactions,
+ * loading animations, and game state changes.
+ */
+
+/* Bot thinking indicator pulsing/zoom effect */
+@keyframes zoom {
+  0%, 100% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+.animate-zoom {
+  animation: zoom 1.4s infinite ease-in-out;
+}
+
+.delay-75 {
+  animation-delay: 0.2s;
+}
+
+.delay-150 {
+  animation-delay: 0.4s;
+}
+
+/* Add custom animations below for piece movements, check alerts, or win screens */

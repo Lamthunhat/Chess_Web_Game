@@ -1,0 +1,4 @@
+# Keep this directory for user custom chess piece images.
+# Filenames format should be:
+# - white-pawn.png, white-knight.png, white-bishop.png, white-rook.png, white-queen.png, white-king.png
+# - black-pawn.png, black-knight.png, black-bishop.png, black-rook.png, black-queen.png, black-king.png
