@@ -1274,6 +1274,52 @@ export const BoardView: React.FC<BoardViewProps> = ({
               </div>
             )}
           </div>
+
+          {/* Mobile Fast HUD Control Actions (visible only on mobile) */}
+          {!isHistoricalReview && (
+            <div className="lg:hidden w-full max-w-[min(720px,68vh)] bg-[#2b2925] border border-[#3c3a37] rounded-2xl p-4 shadow-sm mt-3">
+              <div className="flex items-center justify-between gap-2">
+                {/* 1. Gợi ý nước đi */}
+                <button
+                  onClick={handleGetHint}
+                  disabled={isBotThinking || isCalculatingSuggestion || outcome.gameOver}
+                  title="Gợi ý nước đi"
+                  className="flex-1 py-2.5 bg-[#312e2b] hover:bg-[#3c3a37] disabled:opacity-30 disabled:hover:bg-[#312e2b] border border-[#81b64c]/40 text-[#81b64c] rounded-xl flex items-center justify-center cursor-pointer transition-all"
+                >
+                  <Lightbulb size={18} className={isCalculatingSuggestion ? "animate-pulse text-[#81b64c]" : "text-[#81b64c]"} />
+                </button>
+
+                {/* 2. Đi lại */}
+                <button
+                  onClick={handleUndo}
+                  disabled={controller.board.moveHistory.length === 0 || isBotThinking}
+                  title="Đi lại"
+                  className="flex-1 py-2.5 bg-[#312e2b] hover:bg-[#3c3a37] disabled:opacity-30 disabled:hover:bg-[#312e2b] border border-[#3c3a37] text-[#E0E0E0] rounded-xl flex items-center justify-center cursor-pointer transition-all"
+                >
+                  <RotateCcw size={18} className="text-[#81b64c]" />
+                </button>
+
+                {/* 3. Xin thua */}
+                <button
+                  onClick={handleResign}
+                  disabled={outcome.gameOver}
+                  title="Xin thua"
+                  className="flex-1 py-2.5 bg-[#312e2b] hover:bg-[#3c3a37] disabled:opacity-30 disabled:hover:bg-[#312e2b] border border-rose-900/50 text-rose-400 rounded-xl flex items-center justify-center cursor-pointer transition-all"
+                >
+                  <Flag size={18} className={outcome.gameOver ? "opacity-30" : "text-rose-400"} />
+                </button>
+
+                {/* 4. Làm mới */}
+                <button
+                  onClick={handleReset}
+                  title="Làm mới"
+                  className="flex-1 py-2.5 bg-[#312e2b] hover:bg-[#3c3a37] border border-[#3c3a37] text-[#E0E0E0] rounded-xl flex items-center justify-center cursor-pointer transition-all"
+                >
+                  <RefreshCw size={18} className="text-[#81b64c]" />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* RIGHT COLUMN: Gameplay HUD, Move list, Controls */}
@@ -1465,7 +1511,7 @@ export const BoardView: React.FC<BoardViewProps> = ({
           {/* REAL-TIME ENGINE ANALYSIS PANEL REMOVED */}
 
           {/* Fast HUD Control Actions */}
-          <div className="bg-[#2b2925] border border-[#3c3a37] rounded-2xl p-5 shadow-sm space-y-3">
+          <div className={`${isHistoricalReview ? '' : 'hidden lg:block'} bg-[#2b2925] border border-[#3c3a37] rounded-2xl p-5 shadow-sm space-y-3`}>
             {isHistoricalReview ? (
               <div className="space-y-3 text-center">
                 <div className="flex items-center justify-center gap-2 text-xs font-semibold text-slate-400">
