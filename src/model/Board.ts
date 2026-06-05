@@ -614,7 +614,7 @@ export class Board {
       case PieceType.ROOK: pieceLetter = 'R'; break;
       case PieceType.QUEEN: pieceLetter = 'Q'; break;
       case PieceType.KING: pieceLetter = 'K'; break;
-      case PieceType.PAWN: pieceLetter = ''; break;
+      case PieceType.PAWN: pieceLetter = 'P'; break;
     }
 
     const startSquare = indexToChessCoordinate(move.fromRow, move.fromCol);

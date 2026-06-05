@@ -36,13 +36,15 @@ export function reconstructMovesFromNotation(notations: string[]): Move[] {
           case PieceType.ROOK: pieceLetter = 'R'; break;
           case PieceType.QUEEN: pieceLetter = 'Q'; break;
           case PieceType.KING: pieceLetter = 'K'; break;
-          default: pieceLetter = ''; break;
+          case PieceType.PAWN: pieceLetter = 'P'; break;
         }
 
-        if (pieceLetter) {
+        if (pieceLetter && pieceLetter !== 'P') {
           return cleanInput.startsWith(pieceLetter);
-        } else {
-          // Pawn move: e.g. exd5 starts with file letter 'e'
+        } else if (pieceLetter === 'P') {
+          if (cleanInput.startsWith('P')) {
+            return true;
+          }
           if (m.captured) {
             const startColName = indexToChessCoordinate(m.fromRow, m.fromCol)[0];
             return cleanInput.startsWith(startColName);

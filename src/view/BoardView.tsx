@@ -626,6 +626,62 @@ export const BoardView: React.FC<BoardViewProps> = ({
     ? '0.0' 
     : `${evaluation > 0 ? '+' : ''}${evaluation.toFixed(1)}`;
 
+  const renderCapturedGrouped = (captured: ChessPiece[], advantage: number | null) => {
+    const typeOrder = [
+      PieceType.PAWN,
+      PieceType.BISHOP,
+      PieceType.KNIGHT,
+      PieceType.ROOK,
+      PieceType.QUEEN,
+    ];
+
+    const groups: Record<PieceType, ChessPiece[]> = {
+      [PieceType.PAWN]: [],
+      [PieceType.BISHOP]: [],
+      [PieceType.KNIGHT]: [],
+      [PieceType.ROOK]: [],
+      [PieceType.QUEEN]: [],
+      [PieceType.KING]: [],
+    };
+
+    captured.forEach(p => {
+      if (p && p.type) {
+        groups[p.type].push(p);
+      }
+    });
+
+    return (
+      <div className="flex items-center gap-1 select-none shrink-0">
+        {typeOrder.map(type => {
+          const list = groups[type];
+          if (list.length === 0) return null;
+          return (
+            <div key={type} className="flex items-center" style={{ marginRight: '2px' }}>
+              {list.map((p, idx) => (
+                <div
+                  key={idx}
+                  className="w-[18px] h-[18px] transition-all hover:scale-110"
+                  style={{
+                    marginLeft: idx > 0 ? '-8px' : '0px',
+                    zIndex: idx,
+                  }}
+                  title={p.type}
+                >
+                  <PieceSVG type={p.type} color={p.color} />
+                </div>
+              ))}
+            </div>
+          );
+        })}
+        {advantage !== null && (
+          <span className="text-[10px] font-bold text-[#8E9299] ml-1 font-mono shrink-0">
+            +{advantage}
+          </span>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-2 md:py-3.5 flex flex-col justify-center">
       {/* Back button & Audio controls */}
@@ -669,30 +725,18 @@ export const BoardView: React.FC<BoardViewProps> = ({
         {/* LEFT COLUMN: Chess board & Captures */}
         <div className="lg:col-span-7 xl:col-span-8 flex flex-col items-center">
           
-          {/* Opponent Captured tracker details */}
           <div className="w-full max-w-[min(720px,68vh)] h-[46px] px-3 flex items-center justify-between bg-[#2b2925] border border-[#3c3a37] rounded-t-xl select-none">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <div className={`w-3.5 h-3.5 rounded-full ${isBoardFlipped ? 'bg-slate-200 border border-slate-400' : 'bg-neutral-900 border border-[#3c3a37]'}`}></div>
-                <span className="text-xs font-bold text-[#E0E0E0]">
+            <div className="flex items-center gap-3 min-w-0 flex-1 mr-2">
+              <div className="flex items-center gap-2 shrink-0">
+                <div className={`w-3 h-3 rounded-full shrink-0 ${isBoardFlipped ? 'bg-slate-200 border border-slate-400' : 'bg-neutral-900 border border-[#3c3a37]'}`}></div>
+                <span className="text-xs font-bold text-[#E0E0E0] whitespace-nowrap shrink-0">
                   {controller.mode === 'ai' 
                     ? `BOT Máy (${controller.botDifficulty <= 4 ? 1200 : controller.botDifficulty} Elo)` 
                     : (isBoardFlipped ? 'Quân Trắng' : 'Quân Đen')}
                 </span>
               </div>
               {/* Captured items by this opponent (eaten pieces list) */}
-              <div className="flex items-center gap-1.5">
-                {(isBoardFlipped ? blackCaptured : whiteCaptured).filter(p => !!p && p.type).map((p, idx) => (
-                  <div key={idx} className="w-6 h-6 opacity-90 hover:scale-105 transition" title={p.type}>
-                    <PieceSVG type={p.type} color={p.color} />
-                  </div>
-                ))}
-                {topAdvantage !== null && (
-                  <span className="text-[10px] bg-[#81b64c]/10 text-[#81b64c] border border-[#81b64c]/20 px-1.5 py-0.5 rounded font-bold ml-2 font-mono">
-                    +{topAdvantage}
-                  </span>
-                )}
-              </div>
+              {renderCapturedGrouped(isBoardFlipped ? blackCaptured : whiteCaptured, topAdvantage)}
             </div>
 
             {/* Top Timer Clock */}
@@ -1205,28 +1249,17 @@ export const BoardView: React.FC<BoardViewProps> = ({
 
           {/* Player Captured tracker details */}
           <div className="w-full max-w-[min(720px,68vh)] h-[46px] px-3 flex items-center justify-between bg-[#2b2925] border border-t-0 border-[#3c3a37] rounded-b-xl select-none">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <div className={`w-3.5 h-3.5 rounded-full ${isBoardFlipped ? 'bg-neutral-900 border border-[#3c3a37]' : 'bg-slate-200 border border-slate-400'}`}></div>
-                <span className="text-xs font-bold text-[#E0E0E0]">
+            <div className="flex items-center gap-3 min-w-0 flex-1 mr-2">
+              <div className="flex items-center gap-2 shrink-0">
+                <div className={`w-3 h-3 rounded-full shrink-0 ${isBoardFlipped ? 'bg-neutral-900 border border-[#3c3a37]' : 'bg-slate-200 border border-slate-400'}`}></div>
+                <span className="text-xs font-bold text-[#E0E0E0] whitespace-nowrap shrink-0">
                   {controller.mode === 'ai' 
                     ? (isBoardFlipped ? 'Bạn (Đen)' : 'Bạn (Trắng)') 
                     : (isBoardFlipped ? 'Quân Đen' : 'Quân Trắng')}
                 </span>
               </div>
               {/* Captured items by player (eaten pieces list) */}
-              <div className="flex items-center gap-1.5">
-                {(isBoardFlipped ? whiteCaptured : blackCaptured).filter(p => !!p && p.type).map((p, idx) => (
-                  <div key={idx} className="w-6 h-6 opacity-90 hover:scale-105 transition" title={p.type}>
-                    <PieceSVG type={p.type} color={p.color} />
-                  </div>
-                ))}
-                {bottomAdvantage !== null && (
-                  <span className="text-[10px] bg-[#81b64c]/10 text-[#81b64c] border border-[#81b64c]/20 px-1.5 py-0.5 rounded font-bold ml-2 font-mono">
-                    +{bottomAdvantage}
-                  </span>
-                )}
-              </div>
+              {renderCapturedGrouped(isBoardFlipped ? whiteCaptured : blackCaptured, bottomAdvantage)}
             </div>
 
             {/* Bottom Timer Clock */}
